@@ -1,0 +1,21 @@
+{
+    "name": "prewk/finsert",
+    "description": "Insert into file streams without overwriting",
+    "homepage": "https://github.com/prewk/finsert",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oskar Thornblad",
+            "email": "oskar.thornblad@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "mockery/mockery": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Prewk\\": "src"
+        }
+    }
+}
