@@ -3,8 +3,6 @@
 
 namespace Prewk\FileChainer;
 
-
-use Prewk\FileChainer\Inserters\Memory;
 use TestCase;
 
 class FileChainerIntegrationTest extends TestCase
