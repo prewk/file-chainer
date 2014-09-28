@@ -6,7 +6,7 @@ namespace Prewk\FileChainer\Inserters;
 
 class Memory extends AbstractInserter
 {
-    public function insert($handle, $string, $bufferSize = 16384)
+    public function _insert($handle, $string, $bufferSize = 16384)
     {
         $insertionPoint = ftell($handle);
 
