@@ -1,7 +1,7 @@
 {
-    "name": "prewk/finsert",
-    "description": "Insert into file streams without overwriting",
-    "homepage": "https://github.com/prewk/finsert",
+    "name": "prewk/file-chainer",
+    "description": "Chainable file stream writer with insert support",
+    "homepage": "https://github.com/prewk/file-chainer",
     "license": "MIT",
     "authors": [
         {
@@ -9,10 +9,10 @@
             "email": "oskar.thornblad@gmail.com"
         }
     ],
-    "require": {},
-    "require-dev": {
-        "mockery/mockery": "dev-master"
+    "require": {
+        "php": ">=5.3.0"
     },
+    "require-dev": {},
     "autoload": {
         "psr-4": {
             "Prewk\\": "src"
