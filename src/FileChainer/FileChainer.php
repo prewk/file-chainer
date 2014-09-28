@@ -2,6 +2,7 @@
 
 namespace Prewk\FileChainer;
 
+use Prewk\FileChainer\Inserters\Memory;
 use Prewk\FileChainerInterface;
 
 class FileChainer implements FileChainerInterface
@@ -30,14 +31,24 @@ class FileChainer implements FileChainerInterface
 
     public function fopen($filename, $mode, $use_include_path = false, $context = null)
     {
-        $this->handle = fopen($filename, $mode, $use_include_path, $context);
+        if (isset($context)) {
+            $this->handle = fopen($filename, $mode, $use_include_path, $context);
+        } else {
+            $this->handle = fopen($filename, $mode, $use_include_path);
+        }
+
 
         return $this;
     }
 
     public function fwrite($string, $length = null)
     {
-        fwrite($this->handle, $string, $length);
+        if (isset($length)) {
+            fwrite($this->handle, $string, $length);
+        } else {
+            fwrite($this->handle, $string);
+        }
+
 
         return $this;
     }
@@ -51,7 +62,7 @@ class FileChainer implements FileChainerInterface
 
     public function fseek($offset, $whence = SEEK_SET)
     {
-        fseek($offset, $whence);
+        fseek($this->handle, $offset, $whence);
 
         return $this;
     }
@@ -68,5 +79,20 @@ class FileChainer implements FileChainerInterface
         $this->inserter->insert($this->handle, $string);
 
         return $this;
+    }
+
+    /**
+     * Create a file chainer with the File inserter
+     *
+     * @return FileChainerInterface
+     */
+    public static function make()
+    {
+        return new static(new Memory);
+    }
+
+    public function fclose()
+    {
+        fclose($this->handle);
     }
 }
