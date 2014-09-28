@@ -8,12 +8,7 @@ use Prewk\FileChainer\InserterInterface;
 
 class File implements InserterInterface
 {
-    /**
-     * @var int Buffer size
-     */
-    protected $bufferSize = 16384;
-
-    public function insert($handle, $string)
+    public function insert($handle, $string, $bufferSize = 16384)
     {
         $insertionPoint = ftell($handle);
 
@@ -23,7 +18,7 @@ class File implements InserterInterface
 
         // Read in everything from the insertion point and forward
         while (!feof($handle)) {
-            fwrite($lastPartHandle, fread($handle, $this->bufferSize), $this->bufferSize);
+            fwrite($lastPartHandle, fread($handle, $bufferSize), $bufferSize);
         }
 
         // Rewind to the insertion point
@@ -35,7 +30,7 @@ class File implements InserterInterface
         // Write back everything starting with the string to insert
         fwrite($handle, $string);
         while (!feof($lastPartHandle)) {
-            fwrite($handle, fread($lastPartHandle, $this->bufferSize), $this->bufferSize);
+            fwrite($handle, fread($lastPartHandle, $bufferSize), $bufferSize);
         }
 
         // Close the last part handle and delete it

@@ -66,5 +66,7 @@ class FileChainer implements FileChainerInterface
     public function insert($string)
     {
         $this->inserter->insert($this->handle, $string);
+
+        return $this;
     }
 }
