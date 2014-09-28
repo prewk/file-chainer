@@ -4,9 +4,7 @@
 namespace Prewk\FileChainer\Inserters;
 
 
-use Prewk\FileChainer\InserterInterface;
-
-class File implements InserterInterface
+class File extends AbstractInserter
 {
     public function insert($handle, $string, $bufferSize = 16384)
     {
