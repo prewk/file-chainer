@@ -24,7 +24,7 @@ abstract class AbstractInserter implements InserterInterface
         if ($name === "insert") {
             $name = "_insert";
         }
-        return call_user_func_array([new static, $name], $arguments);
+        return call_user_func_array(array(new static, $name), $arguments);
     }
 
     /**
@@ -39,6 +39,6 @@ abstract class AbstractInserter implements InserterInterface
         if ($name === "insert") {
             $name = "_insert";
         }
-        return call_user_func_array([$this, $name], $arguments);
+        return call_user_func_array(array($this, $name), $arguments);
     }
 }
