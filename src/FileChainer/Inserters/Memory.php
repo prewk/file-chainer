@@ -20,7 +20,9 @@ class Memory extends AbstractInserter
         fseek($handle, $insertionPoint);
 
         // Write back everything starting with the string to insert
-
         fwrite($handle, $string . $data);
+
+        // Re-set pointer
+        fseek($handle, $insertionPoint + strlen($string));
     }
 }

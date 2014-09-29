@@ -34,5 +34,8 @@ class File extends AbstractInserter
         // Close the last part handle and delete it
         fclose($lastPartHandle);
         unlink($tempPath);
+
+        // Re-set pointer
+        fseek($handle, $insertionPoint + strlen($string));
     }
 }
