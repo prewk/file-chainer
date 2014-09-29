@@ -5,7 +5,7 @@
 
 namespace Prewk\FileChainer;
 
-use Prewk\FileChainer\Inserters\Memory;
+use Prewk\FileChainer\Inserters\File;
 use Prewk\FileChainerInterface;
 
 /**
@@ -159,7 +159,7 @@ class FileChainer implements FileChainerInterface
      */
     public static function make()
     {
-        return new static(new Memory);
+        return new static(new File);
     }
 
     /**
