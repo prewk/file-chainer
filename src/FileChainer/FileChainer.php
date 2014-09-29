@@ -1,10 +1,16 @@
 <?php
+/**
+ * @author Oskar Thornblad <oskar.thornblad@gmail.com>
+ */
 
 namespace Prewk\FileChainer;
 
 use Prewk\FileChainer\Inserters\Memory;
 use Prewk\FileChainerInterface;
 
+/**
+ * Chainable native file stream methods with insert support
+ */
 class FileChainer implements FileChainerInterface
 {
     /**
@@ -29,6 +35,15 @@ class FileChainer implements FileChainerInterface
         return $this->handle;
     }
 
+    /**
+     * Native fopen()
+     *
+     * @param string $filename         Filename
+     * @param string $mode             Mode
+     * @param bool   $use_include_path Use include path
+     * @param null   $context          Context
+     * @return FileChainerInterface
+     */
     public function fopen($filename, $mode, $use_include_path = false, $context = null)
     {
         if (isset($context)) {
@@ -41,8 +56,20 @@ class FileChainer implements FileChainerInterface
         return $this;
     }
 
+    /**
+     * Native fwrite()
+     *
+     * @param string $string          String
+     * @param null   $length          Length
+     * @throws MissingHandleException if no file handle was set
+     * @return FileChainerInterface
+     */
     public function fwrite($string, $length = null)
     {
+        if (!isset($this->handle)) {
+            throw new MissingHandleException("Missing handle");
+        }
+
         if (isset($length)) {
             fwrite($this->handle, $string, $length);
         } else {
@@ -53,29 +80,73 @@ class FileChainer implements FileChainerInterface
         return $this;
     }
 
+    /**
+     * Native fread()
+     *
+     * @param $length Length
+     * @throws MissingHandleException if no file handle was set
+     * @return FileChainerInterface
+     */
     public function fread($length)
     {
+        if (!isset($this->handle)) {
+            throw new MissingHandleException("Missing handle");
+        }
+
         fread($this->handle, $length);
 
         return $this;
     }
 
+    /**
+     * Native fseek()
+     *
+     * @param int $offset           Offset
+     * @param int $whence           Whence
+     * @throws MissingHandleException if no file handle was set
+     * @return FileChainerInterface
+     */
     public function fseek($offset, $whence = SEEK_SET)
     {
+        if (!isset($this->handle)) {
+            throw new MissingHandleException("Missing handle");
+        }
+
         fseek($this->handle, $offset, $whence);
 
         return $this;
     }
 
+    /**
+     * Native rewind()
+     *
+     * @throws MissingHandleException if no file handle was set
+     * @return FileChainerInterface
+     */
     public function rewind()
     {
+        if (!isset($this->handle)) {
+            throw new MissingHandleException("Missing handle");
+        }
+
         rewind($this->handle);
 
         return $this;
     }
 
+    /**
+     * Insert a string at current file handle position without overwriting
+     *
+     * @param $string String to insert
+     * @throws MissingHandleException if no file handle was set
+     * @return FileChainerInterface
+     */
     public function insert($string)
     {
+        if (!isset($this->handle)) {
+            throw new MissingHandleException("Missing handle");
+        }
+
         $this->inserter->insert($this->handle, $string);
 
         return $this;
@@ -91,8 +162,18 @@ class FileChainer implements FileChainerInterface
         return new static(new Memory);
     }
 
+    /**
+     * Native fclose()
+     *
+     * @throws MissingHandleException if no file handle was set
+     * @return FileChainerInterface
+     */
     public function fclose()
     {
+        if (!isset($this->handle)) {
+            throw new MissingHandleException("Missing handle");
+        }
+
         fclose($this->handle);
     }
 }

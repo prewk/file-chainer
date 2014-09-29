@@ -1,11 +1,24 @@
 <?php
+/**
+ * @author Oskar Thornblad <oskar.thornblad@gmail.com>
+ */
 
 
 namespace Prewk\FileChainer\Inserters;
 
-
+/**
+ * Temporary file inserter method
+ */
 class File extends AbstractInserter
 {
+    /**
+     * Insert a string into a file stream with the help of a temporary file stream
+     *
+     * @param     $handle     File handle
+     * @param     $string     String to insert
+     * @param int $bufferSize Buffer size
+     * @return void
+     */
     public function _insert($handle, $string, $bufferSize = 16384)
     {
         $insertionPoint = ftell($handle);

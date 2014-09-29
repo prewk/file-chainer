@@ -28,6 +28,7 @@ Prewk\FileChainer::make()
 
 echo file_get_contents("/foo/bar.txt");
 // Output: barfoo
+// The handle's file pointer = 3
 ````
 
 ### Inserting with static method
@@ -43,4 +44,6 @@ fclose($handle);
 
 echo file_get_contents("/foo/bar.txt");
 // Output: barfoo
+// The handle's file pointer = 3
 ````
+

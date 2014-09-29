@@ -24,4 +24,13 @@ class FileChainerIntegrationTest extends TestCase
 
         unlink($path);
     }
+
+    /**
+     * @expectedException Prewk\FileChainer\MissingHandleException
+     */
+    public function test_that_chaining_without_a_handle_throws_an_exception()
+    {
+        FileChainer::make()
+            ->fwrite("foobar");
+    }
 } 
