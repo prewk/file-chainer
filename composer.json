@@ -12,7 +12,9 @@
     "require": {
         "php": ">=5.3.0"
     },
-    "require-dev": {},
+    "require-dev": {
+        "mockery/mockery": "dev-master"
+    },
     "autoload": {
         "psr-4": {
             "Prewk\\": "src"
