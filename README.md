@@ -47,3 +47,4 @@ echo file_get_contents("/foo/bar.txt");
 // The handle's file pointer = 3
 ````
 
+ 
