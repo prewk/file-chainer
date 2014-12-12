@@ -11,7 +11,7 @@ class CsvFileIntegrationTest extends TestCase
         $file = fopen('php://temp', 'w');
         fwrite($file, 'testline');
 
-        $csvData = ['field1' => 'value1', 'field2' => 'value2'];
+        $csvData = array('field1' => 'value1', 'field2' => 'value2');
 
         rewind($file);
         CsvFile::insert($file, $csvData);
@@ -27,7 +27,7 @@ class CsvFileIntegrationTest extends TestCase
         $file = fopen('php://temp', 'w');
         fwrite($file, 'testline');
 
-        $csvData = ['field1' => 'value1', 'field2' => 'value2'];
+        $csvData = array('field1' => 'value1', 'field2' => 'value2');
 
         fseek($file, 4);
 
@@ -43,7 +43,7 @@ class CsvFileIntegrationTest extends TestCase
         $file = fopen('php://temp', 'w');
         fwrite($file, 'testline');
 
-        $csvData = ['field1' => 'value1', 'field2' => 'value2'];
+        $csvData = array('field1' => 'value1', 'field2' => 'value2');
 
         CsvFile::insert($file, $csvData);
         rewind($file);
@@ -55,7 +55,7 @@ class CsvFileIntegrationTest extends TestCase
     {
         $file = fopen('php://temp', 'w');
 
-        $csvData = ['field1' => 'value|1', 'field2' => 'value|2'];
+        $csvData = array('field1' => 'value|1', 'field2' => 'value|2');
 
         CsvFile::insert($file, $csvData, '|', '~');
         rewind($file);
