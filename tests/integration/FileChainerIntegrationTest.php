@@ -15,12 +15,14 @@ class FileChainerIntegrationTest extends TestCase
             ->fopen($path, "w+")
             ->fwrite("foobar")
             ->rewind()
-            ->insert("baz")
+            ->finsert("baz")
             ->fseek(8)
-            ->insert("lorem")
+            ->finsert("lorem")
+            ->rewind()
+            ->finsertcsv(array("foo", "bar"))
             ->fclose();
 
-        $this->assertEquals("bazfoobaloremr", file_get_contents($path));
+        $this->assertEquals("foo,bar\nbazfoobaloremr", file_get_contents($path));
 
         unlink($path);
     }

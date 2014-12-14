@@ -141,7 +141,7 @@ class FileChainer implements FileChainerInterface
      * @throws MissingHandleException if no file handle was set
      * @return FileChainerInterface
      */
-    public function insert($string, $bufferSize = 16384)
+    public function finsert($string, $bufferSize = 16384)
     {
         if (!isset($this->handle)) {
             throw new MissingHandleException("Missing handle");

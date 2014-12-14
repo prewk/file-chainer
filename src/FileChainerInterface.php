@@ -89,7 +89,7 @@ interface FileChainerInterface
      * @param int $bufferSize Buffer size
      * @return FileChainerInterface
      */
-    public function insert($string, $bufferSize = 16384);
+    public function finsert($string, $bufferSize = 16384);
 
     /**
      * Insert a csv at current file handle position without overwriting
