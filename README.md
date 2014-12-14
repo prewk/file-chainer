@@ -47,4 +47,24 @@ echo file_get_contents("/foo/bar.txt");
 // The handle's file pointer = 3
 ````
 
- 
+### Different inserters
+
+## File inserter (default)
+
+Uses a temporary file for intermediary storage.
+
+````php
+Prewk\FileChainer\Inserters\File::insert($handle, "bar");
+````
+
+#### Memory inserter
+
+Uses memory for intermediary storage.
+
+````php
+Prewk\FileChainer\Inserters\Memory::insert($handle, "bar");
+````
+
+#### CsvFile inserter
+
+Uses a temporary file for intermediary storage

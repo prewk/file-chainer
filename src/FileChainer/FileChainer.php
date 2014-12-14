@@ -141,13 +141,13 @@ class FileChainer implements FileChainerInterface
      * @throws MissingHandleException if no file handle was set
      * @return FileChainerInterface
      */
-    public function insert($string)
+    public function insert($string, $bufferSize = 16384)
     {
         if (!isset($this->handle)) {
             throw new MissingHandleException("Missing handle");
         }
 
-        $this->inserter->insert($this->handle, $string);
+        $this->inserter->insert($this->handle, $string, $bufferSize);
 
         return $this;
     }
@@ -175,5 +175,25 @@ class FileChainer implements FileChainerInterface
         }
 
         fclose($this->handle);
+    }
+
+    /**
+     * Insert a csv at current file handle position without overwriting
+     *
+     * @param array $fields An array of values
+     * @param string $delimiter The optional delimiter parameter sets the field delimiter (one character only).
+     * @param string $enclosure The optional enclosure parameter sets the field enclosure (one character only).
+     * @throws MissingHandleException if no file handle was set
+     * @return FileChainerInterface
+     */
+    public function finsertcsv(array $fields, $delimiter = ",", $enclosure = "\"", $bufferSize = 16384)
+    {
+        if (!isset($this->handle)) {
+            throw new MissingHandleException("Missing handle");
+        }
+
+        $this->inserter->insertCSV($this->handle, $fields, $delimiter, $enclosure, $bufferSize);
+
+        return $this;
     }
 }

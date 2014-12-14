@@ -13,10 +13,22 @@ interface InserterInterface
     /**
      * Insert a string into a file stream
      *
-     * @param     $handle     File handle
-     * @param     $string     String to insert
-     * @param int $bufferSize Buffer size
+     * @param resource $handle     File handle
+     * @param          $string     String to insert
+     * @param int      $bufferSize Buffer size
      * @return void
      */
     public function _insert($handle, $string, $bufferSize = 16384);
+
+    /**
+     * Insert CSV fputcsv style at stream handle pointer position
+     *
+     * @param resource $handle      File handle
+     * @param array    $fields      An array of values
+     * @param string   $delimiter   The optional delimiter parameter sets the field delimiter (one character only).
+     * @param string   $enclosure   The optional enclosure parameter sets the field enclosure (one character only).
+     * @param int      $bufferSize  Buffer size
+     * @return void
+     */
+    public function _insertCSV($handle, array $fields, $delimiter = ",", $enclosure = "\"", $bufferSize = 16384);
 } 

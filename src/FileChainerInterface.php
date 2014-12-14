@@ -86,8 +86,19 @@ interface FileChainerInterface
      * Insert a string at current file handle position without overwriting
      *
      * @param $string String to insert
+     * @param int $bufferSize Buffer size
+     * @return FileChainerInterface
+     */
+    public function insert($string, $bufferSize = 16384);
+
+    /**
+     * Insert a csv at current file handle position without overwriting
+     *
+     * @param array $fields An array of values
+     * @param string $delimiter The optional delimiter parameter sets the field delimiter (one character only).
+     * @param string $enclosure The optional enclosure parameter sets the field enclosure (one character only).
      * @throws MissingHandleException if no file handle was set
      * @return FileChainerInterface
      */
-    public function insert($string);
+    public function finsertcsv(array $fields, $delimiter = ",", $enclosure = "\"", $bufferSize = 16384);
 }

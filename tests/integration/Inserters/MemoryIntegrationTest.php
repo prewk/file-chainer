@@ -57,4 +57,61 @@ class MemoryIntegrationTest extends TestCase
         fclose($handle);
         unlink($path);
     }
+
+    public function test_that_insert_csv_data_at_beginning()
+    {
+        $handle = fopen("php://temp", "w");
+        fwrite($handle, "testline");
+
+        $csvData = array("field1" => "value1", "field2" => "value2");
+
+        rewind($handle);
+        Memory::insertCSV($handle, $csvData);
+
+        rewind($handle);
+        $contents = explode("\n", stream_get_contents($handle));
+        $this->assertEquals("value1,value2", $contents[0]);
+        $this->assertEquals("testline", $contents[1]);
+    }
+
+    public function test_that_insert_csv_data_in_middle()
+    {
+        $handle = fopen("php://temp", "w");
+        fwrite($handle, "testline");
+
+        $csvData = array("field1" => "value1", "field2" => "value2");
+
+        fseek($handle, 4);
+
+        Memory::insertCSV($handle, $csvData);
+        rewind($handle);
+        $contents = explode("\n", stream_get_contents($handle));
+        $this->assertEquals("testvalue1,value2", $contents[0]);
+        $this->assertEquals("line", $contents[1]);
+    }
+
+    public function test_that_insert_csv_data_at_end()
+    {
+        $file = fopen("php://temp", "w");
+        fwrite($file, "testline");
+
+        $csvData = array("field1" => "value1", "field2" => "value2");
+
+        Memory::insertCSV($file, $csvData);
+        rewind($file);
+        $contents = explode("\n", stream_get_contents($file));
+        $this->assertEquals("testlinevalue1,value2", $contents[0]);
+    }
+
+    public function test_that_insert_csv_data_obeys_delimiter_and_enclosure()
+    {
+        $file = fopen("php://temp", "w");
+
+        $csvData = array("field1" => "value|1", "field2" => "value|2");
+
+        Memory::insertCSV($file, $csvData, "|", "~");
+        rewind($file);
+        $contents = explode("\n", stream_get_contents($file));
+        $this->assertEquals("~value|1~|~value|2~", $contents[0]);
+    }
 }

@@ -21,10 +21,7 @@ abstract class AbstractInserter implements InserterInterface
      */
     public static function __callStatic($name, $arguments)
     {
-        if ($name === "insert") {
-            $name = "_insert";
-        }
-        return call_user_func_array(array(new static, $name), $arguments);
+        return call_user_func_array(array(new static, "_$name"), $arguments);
     }
 
     /**
@@ -36,9 +33,6 @@ abstract class AbstractInserter implements InserterInterface
      */
     public function __call($name, $arguments)
     {
-        if ($name === "insert") {
-            $name = "_insert";
-        }
-        return call_user_func_array(array($this, $name), $arguments);
+        return call_user_func_array(array($this, "_$name"), $arguments);
     }
 }
