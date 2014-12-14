@@ -3,13 +3,13 @@
  * @author Oskar Thornblad <oskar.thornblad@gmail.com>
  */
 
-
 namespace Prewk\FileChainer\Inserters;
+use Prewk\FileChainer\InserterInterface;
 
 /**
  * Temporary memory inserter method
  */
-class Memory extends AbstractInserter
+class Memory implements InserterInterface
 {
     /**
      * Insert a string into a file stream by storing the file contents as a variable
@@ -19,7 +19,7 @@ class Memory extends AbstractInserter
      * @param int $bufferSize Buffer size
      * @return void
      */
-    public function _insert($handle, $string, $bufferSize = 16384)
+    public static function finsert($handle, $string, $bufferSize = 16384)
     {
         $insertionPoint = ftell($handle);
 
@@ -49,7 +49,7 @@ class Memory extends AbstractInserter
      * @param int $bufferSize Buffer size
      * @return void
      */
-    public function _insertCSV($handle, array $fields, $delimiter = ",", $enclosure = "\"", $bufferSize = 16384)
+    public static function finsertcsv($handle, array $fields, $delimiter = ",", $enclosure = "\"", $bufferSize = 16384)
     {
         $insertionPoint = ftell($handle);
 
@@ -70,4 +70,5 @@ class Memory extends AbstractInserter
         // Re-set pointer
         fseek($handle, $insertionPoint + $rewindPosition);
     }
+
 }

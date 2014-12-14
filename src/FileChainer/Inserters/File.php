@@ -4,11 +4,12 @@
  */
 
 namespace Prewk\FileChainer\Inserters;
+use Prewk\FileChainer\InserterInterface;
 
 /**
  * Temporary file inserter method
  */
-class File extends AbstractInserter
+class File implements InserterInterface
 {
     /**
      * Insert a string into a file stream with the help of a temporary file stream
@@ -18,7 +19,7 @@ class File extends AbstractInserter
      * @param int $bufferSize Buffer size
      * @return void
      */
-    public function _insert($handle, $string, $bufferSize = 16384)
+    public static function finsert($handle, $string, $bufferSize = 16384)
     {
         $insertionPoint = ftell($handle);
 
@@ -62,7 +63,7 @@ class File extends AbstractInserter
      * @param int $bufferSize Buffer size
      * @return void
      */
-    public function _insertCSV($handle, array $fields, $delimiter = ",", $enclosure = "\"", $bufferSize = 16384)
+    public static function finsertcsv($handle, array $fields, $delimiter = ",", $enclosure = "\"", $bufferSize = 16384)
     {
         $insertionPoint = ftell($handle);
 

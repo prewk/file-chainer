@@ -147,7 +147,7 @@ class FileChainer implements FileChainerInterface
             throw new MissingHandleException("Missing handle");
         }
 
-        $this->inserter->insert($this->handle, $string, $bufferSize);
+        call_user_func_array(array($this->inserter, "finsert"), array_merge(array($this->handle), func_get_args()));
 
         return $this;
     }
@@ -192,7 +192,7 @@ class FileChainer implements FileChainerInterface
             throw new MissingHandleException("Missing handle");
         }
 
-        $this->inserter->insertCSV($this->handle, $fields, $delimiter, $enclosure, $bufferSize);
+        call_user_func_array(array($this->inserter, "finsertcsv"), array_merge(array($this->handle), func_get_args()));
 
         return $this;
     }

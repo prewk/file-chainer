@@ -16,6 +16,11 @@ And run `composer install`.
 
 ## Usage
 
+Two new file stream methods:
+
+* `insert` inserts a string at the current file stream position
+* `finsertcsv` inserts a csv (like [fputcsv](http://se2.php.net/manual/en/function.fputcsv.php)) line at the current file stream position
+
 ### Inserting & chaining
 
 ````php
@@ -47,7 +52,7 @@ echo file_get_contents("/foo/bar.txt");
 // The handle's file pointer = 3
 ````
 
-### Different inserters
+### Inserters
 
 ## File inserter (default)
 
@@ -55,6 +60,7 @@ Uses a temporary file for intermediary storage.
 
 ````php
 Prewk\FileChainer\Inserters\File::insert($handle, "bar");
+Prewk\FileChainer\Inserters\File::finsertcsv($handle, ["foo", "bar"], ";");
 ````
 
 #### Memory inserter
@@ -63,8 +69,5 @@ Uses memory for intermediary storage.
 
 ````php
 Prewk\FileChainer\Inserters\Memory::insert($handle, "bar");
+Prewk\FileChainer\Inserters\Memory::finsertcsv($handle, ["foo", "bar"], ";");
 ````
-
-#### CsvFile inserter
-
-Uses a temporary file for intermediary storage

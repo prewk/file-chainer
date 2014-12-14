@@ -7,25 +7,6 @@ use TestCase;
 
 class FileIntegrationTest extends TestCase
 {
-    public function test_that_it_inserts()
-    {
-        $inserter = new File;
-
-        $path = tempnam(sys_get_temp_dir(), "file-chainer");
-
-        $handle = fopen($path, "w+");
-        fwrite($handle, "foobar");
-        fseek($handle, 3);
-
-        $inserter->insert($handle, "baz");
-
-        fclose($handle);
-
-        $this->assertEquals("foobazbar", file_get_contents($path));
-
-        unlink($path);
-    }
-
     public function test_that_it_inserts_static()
     {
         $path = tempnam(sys_get_temp_dir(), "file-chainer");
@@ -34,7 +15,7 @@ class FileIntegrationTest extends TestCase
         fwrite($handle, "foobar");
         fseek($handle, 3);
 
-        File::insert($handle, "baz");
+        File::finsert($handle, "baz");
 
         fclose($handle);
 
@@ -51,7 +32,7 @@ class FileIntegrationTest extends TestCase
         fwrite($handle, "foobar");
         fseek($handle, 3);
 
-        File::insert($handle, "baz");
+        File::finsert($handle, "baz");
 
         $this->assertEquals(6, ftell($handle));
 
@@ -67,7 +48,7 @@ class FileIntegrationTest extends TestCase
         $csvData = array("field1" => "value1", "field2" => "value2");
 
         rewind($handle);
-        File::insertCSV($handle, $csvData);
+        File::finsertcsv($handle, $csvData);
 
         rewind($handle);
         $contents = explode("\n", stream_get_contents($handle));
@@ -84,7 +65,7 @@ class FileIntegrationTest extends TestCase
 
         fseek($handle, 4);
 
-        File::insertCSV($handle, $csvData);
+        File::finsertcsv($handle, $csvData);
         rewind($handle);
         $contents = explode("\n", stream_get_contents($handle));
         $this->assertEquals("testvalue1,value2", $contents[0]);
@@ -98,7 +79,7 @@ class FileIntegrationTest extends TestCase
 
         $csvData = array("field1" => "value1", "field2" => "value2");
 
-        File::insertCSV($file, $csvData);
+        File::finsertcsv($file, $csvData);
         rewind($file);
         $contents = explode("\n", stream_get_contents($file));
         $this->assertEquals("testlinevalue1,value2", $contents[0]);
@@ -110,7 +91,7 @@ class FileIntegrationTest extends TestCase
 
         $csvData = array("field1" => "value|1", "field2" => "value|2");
 
-        File::insertCSV($file, $csvData, "|", "~");
+        File::finsertcsv($file, $csvData, "|", "~");
         rewind($file);
         $contents = explode("\n", stream_get_contents($file));
         $this->assertEquals("~value|1~|~value|2~", $contents[0]);

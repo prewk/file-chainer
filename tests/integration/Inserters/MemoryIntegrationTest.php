@@ -6,25 +6,6 @@ use TestCase;
 
 class MemoryIntegrationTest extends TestCase
 {
-    public function test_that_it_inserts()
-    {
-        $inserter = new Memory;
-
-        $path = tempnam(sys_get_temp_dir(), "file-chainer");
-
-        $handle = fopen($path, "w+");
-        fwrite($handle, "foobar");
-        fseek($handle, 3);
-
-        $inserter->insert($handle, "baz");
-
-        fclose($handle);
-
-        $this->assertEquals("foobazbar", file_get_contents($path));
-
-        unlink($path);
-    }
-
     public function test_that_it_inserts_static()
     {
         $path = tempnam(sys_get_temp_dir(), "file-chainer");
@@ -33,7 +14,7 @@ class MemoryIntegrationTest extends TestCase
         fwrite($handle, "foobar");
         fseek($handle, 3);
 
-        Memory::insert($handle, "baz");
+        Memory::finsert($handle, "baz");
 
         fclose($handle);
 
@@ -50,7 +31,7 @@ class MemoryIntegrationTest extends TestCase
         fwrite($handle, "foobar");
         fseek($handle, 3);
 
-        Memory::insert($handle, "baz");
+        Memory::finsert($handle, "baz");
 
         $this->assertEquals(6, ftell($handle));
 
@@ -66,7 +47,7 @@ class MemoryIntegrationTest extends TestCase
         $csvData = array("field1" => "value1", "field2" => "value2");
 
         rewind($handle);
-        Memory::insertCSV($handle, $csvData);
+        Memory::finsertcsv($handle, $csvData);
 
         rewind($handle);
         $contents = explode("\n", stream_get_contents($handle));
@@ -83,7 +64,7 @@ class MemoryIntegrationTest extends TestCase
 
         fseek($handle, 4);
 
-        Memory::insertCSV($handle, $csvData);
+        Memory::finsertcsv($handle, $csvData);
         rewind($handle);
         $contents = explode("\n", stream_get_contents($handle));
         $this->assertEquals("testvalue1,value2", $contents[0]);
@@ -97,7 +78,7 @@ class MemoryIntegrationTest extends TestCase
 
         $csvData = array("field1" => "value1", "field2" => "value2");
 
-        Memory::insertCSV($file, $csvData);
+        Memory::finsertcsv($file, $csvData);
         rewind($file);
         $contents = explode("\n", stream_get_contents($file));
         $this->assertEquals("testlinevalue1,value2", $contents[0]);
@@ -109,7 +90,7 @@ class MemoryIntegrationTest extends TestCase
 
         $csvData = array("field1" => "value|1", "field2" => "value|2");
 
-        Memory::insertCSV($file, $csvData, "|", "~");
+        Memory::finsertcsv($file, $csvData, "|", "~");
         rewind($file);
         $contents = explode("\n", stream_get_contents($file));
         $this->assertEquals("~value|1~|~value|2~", $contents[0]);

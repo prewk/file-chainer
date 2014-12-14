@@ -18,7 +18,7 @@ interface InserterInterface
      * @param int      $bufferSize Buffer size
      * @return void
      */
-    public function _insert($handle, $string, $bufferSize = 16384);
+    public static function finsert($handle, $string, $bufferSize = 16384);
 
     /**
      * Insert CSV fputcsv style at stream handle pointer position
@@ -30,5 +30,5 @@ interface InserterInterface
      * @param int      $bufferSize  Buffer size
      * @return void
      */
-    public function _insertCSV($handle, array $fields, $delimiter = ",", $enclosure = "\"", $bufferSize = 16384);
-} 
+    public static function finsertcsv($handle, array $fields, $delimiter = ",", $enclosure = "\"", $bufferSize = 16384);
+}
